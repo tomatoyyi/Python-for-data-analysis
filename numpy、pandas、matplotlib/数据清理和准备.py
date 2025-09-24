@@ -86,11 +86,54 @@ import pandas as pd
 # print(df1.agg(pd.value_counts, dropna=False).fillna(0))
 
 
-#检测和过滤异常值
-data=pd.DataFrame(np.random.standard_normal((1000,4)))
-print(data.describe())
-#找第一列绝对值超过3的值的行
-col=data[0]
-print('abs>3:\n',col[col.abs()>3])
-#用布尔数组筛选行，只保留 True 对应的行，即 “至少有一列绝对值>3” 的行。.any结果是一个一维布尔数组（长度等于行数）
-print('data[(data.abs() > 3).any(axis="columns")]:\n',data[(data.abs() > 3).any(axis="columns")])
+# #检测和过滤异常值
+# data=pd.DataFrame(np.random.standard_normal((1000,4)))
+# print(data.describe())
+# #找第一列绝对值超过3的值的行
+# col=data[0]
+# print('abs>3:\n',col[col.abs()>3])
+# #用布尔数组筛选行，只保留 True 对应的行，即 “至少有一列绝对值>3” 的行。.any结果是一个一维布尔数组（长度等于行数）
+# print('data[(data.abs() > 3).any(axis="columns")]:\n',data[(data.abs() > 3).any(axis="columns")])
+
+# #排列和随机抽样
+# data1=pd.DataFrame(np.arange(42).reshape(6,7))
+# print(data1)
+# #方法1
+# sampler1=np.random.permutation(data1)
+# print(sampler1)
+# #方法2
+# sampler2=np.random.permutation(6)
+# print(sampler2)
+# print(data1.take(sampler2,axis=0))
+# print(data1.iloc[sampler2])
+
+# #计算指标/虚拟变量
+# df = pd.DataFrame({"key": ["b", "b", "a", "c", "a", "b"],"data1": range(6)})
+# print(df)
+# print(df.sort_values(by='key'))
+# print(pd.get_dummies(df['data1'],dtype='float64'))
+# print(pd.get_dummies(df['key'],dtype='float64'))
+# #添加前缀并合并数据
+# dummies = pd.get_dummies(df["key"], prefix="key", dtype=float)
+# #df['data1'] 返回的是 Series 类型这是一个一维数组，它的 join 方法与 DataFrame 的 join 方法行为不同，主要用于索引上的连接，且不适合直接与另一个 DataFrame（如 dummies）进行列拼接。
+# #**df[['data1']] 返回的是 DataFrame 类型** 虽然只包含一列，但它是二维的 DataFrame 结构。DataFrame 的 join` 方法可以按索引将两个 DataFrame 的列拼接在一起，这正是这里需要的功能。
+# df_with_dummy=df[['data1']].join(dummies)
+# print(df_with_dummy)
+
+# #分类拓展类型
+# data=np.random.standard_normal(1000)
+# bins1=pd.qcut(data,4,labels=['Q1','Q2','Q3','Q4'])
+# print('bins1:\n',bins1)
+# bins2 = pd.Series(bins1, name='quartile')
+# print('bins2:\n',bins2)
+# #groupby(bins)：把数据按照 bins 里的 “分组依据”（这里是 pd.qcut 生成的 “分位数区间”）分成若干组。
+# #agg(['count', 'min', 'max'])：对每个分组内的数据，同时计算多个聚合指标（count 统计数量、min 取最小值、max 取最大值）。
+# results = pd.Series(data).groupby(bins2,observed=False).agg(['count', 'min', 'max']).reset_index()
+# print('results:\n',results)
+# #catagories占用内存较少
+# labels=pd.Series(['foo','bar','baz']*250000)
+# catagories=labels.astype('category')
+#
+# print('labels.memory_usage():',labels.memory_usage(deep=True))
+#
+# print('catagories.memory_usage():',catagories.memory_usage(deep=True))
