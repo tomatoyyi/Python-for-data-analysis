@@ -89,4 +89,4 @@ print(df1)
 # print(data2["three"] > 5)
 # print(data2[data2["three"] > 5])#注意，[]是可以放入行切片的，所以带上了第0、1、3列
 # print(data2[data2.three > 5])
-# print(data2.loc[data2.three > 5])#locz你传入一维数组
+# print(data2.loc[data2.three > 5])#loc只能传入一维数组
