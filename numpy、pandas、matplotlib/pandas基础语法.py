@@ -68,18 +68,18 @@ import pandas as pd
 # df4=pd.DataFrame([2,3,4,5,6])
 # print('df4:\n',df4)
 
-#iloc\loc
-df1=pd.DataFrame(np.random.randint(0,10,(5,4)),index=['a','b','c','d','e'],columns=['one','two','three','four'])
-print('df1:\n',df1)
-#print(df1[0:2,0:2])错误
-#print(df1[0])#错误，没有索引为0的列
-print(df1[0:1])#只能用切片或iloc
-print('df1[\'one\']:\n',df1['one'])
-print('df1[df1[\'one\']>3]:\n',df1[df1['one']>3])
-print('df1[0:2]:\n',df1[0:2])
-print('df1.loc[\'a\':\'c\',\'one\':\'three\']:\n',df1.loc['a':'c','one':'three'])#包含
-df1[df1<5]=0
-print(df1)
+# #iloc\loc
+# df1=pd.DataFrame(np.random.randint(0,10,(5,4)),index=['a','b','c','d','e'],columns=['one','two','three','four'])
+# print('df1:\n',df1)
+# #print(df1[0:2,0:2])错误
+# #print(df1[0])#错误，没有索引为0的列
+# print(df1[0:1])#只能用切片或iloc
+# print('df1[\'one\']:\n',df1['one'])
+# print('df1[df1[\'one\']>3]:\n',df1[df1['one']>3])
+# print('df1[0:2]:\n',df1[0:2])
+# print('df1.loc[\'a\':\'c\',\'one\':\'three\']:\n',df1.loc['a':'c','one':'three'])#包含
+# df1[df1<5]=0
+# print(df1)
 
 # data2 = pd.DataFrame(np.arange(16).reshape((4, 4)),index=["Ohio", "Colorado", "Utah", "New York"],columns=["one", "two", "three", "four"])
 # print(data2)
@@ -90,3 +90,22 @@ print(df1)
 # print(data2[data2["three"] > 5])#注意，[]是可以放入行切片的，所以带上了第0、1、3列
 # print(data2[data2.three > 5])
 # print(data2.loc[data2.three > 5])#loc只能传入一维数组
+
+import pandas as pd
+
+# 示例数据
+df = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'London', 'Paris']
+})
+
+# --- 1. 默认情况 ---
+# 默认列名是居中对齐的
+print("--- 默认输出 (列名居中) ---")
+print(df)
+# --- 2. 设置列名为左对齐 ---
+pd.set_option('display.colheader_justify', 'left')
+
+print("\n--- 设置后输出 (列名左对齐) ---")
+print(df)
