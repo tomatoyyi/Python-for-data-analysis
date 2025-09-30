@@ -13,6 +13,13 @@
 - 画图
 - 数据标准化画图二
 ## 4. 用类似的方法分析Windows、iPhone等用户 
+## 5. 结果
+
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+![img_5.png](img_5.png)
+
 
 # 新应用
 ## json数据

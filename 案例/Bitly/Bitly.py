@@ -6,7 +6,7 @@ import seaborn as sns
 
 # 显示所有列
 pd.set_option('display.max_columns', None)
-path = r"D:\PythonProject\pydata-book\datasets\bitly_usagov\example.txt"
+path = r"Bitly\bitly_usagov\example.txt"
 
 with open(path,encoding='utf-8') as f:
     records = [json.loads(line) for line in f]
