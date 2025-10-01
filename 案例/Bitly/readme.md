@@ -94,7 +94,7 @@ count_subset=agg_counts.take(indexer[-10:])
 ## 改某个索引名称或值数据：
 -该索引`count_subset.rename(index={"":'UNKNOWN'},inplace=True)`
 ## pd.melt的参数
--
+
 ```commandline
 pd.melt(frame, id_vars=None, value_vars=None, var_name='variable', value_name='value', col_level=None)
 ```
@@ -107,7 +107,7 @@ pd.melt(frame, id_vars=None, value_vars=None, var_name='variable', value_name='v
 - value_name
 作用：给新生成的、包含原始值的那个列起一个名字。默认名为 'value'。
 # 注意事项
-1. 空字符串 "" 和缺失值 NaN 是两种完全不同的东西。Pandas 默认不会把空字符串 "" 自动识别为缺失值 NaN。
+## 空字符串 "" 和缺失值 NaN 是两种完全不同的东西。Pandas 默认不会把空字符串 "" 自动识别为缺失值 NaN。
 ```
 data = [
     {"tz": "America/New_York"},  # 正常值
@@ -121,7 +121,7 @@ Pandas 会忠实地记录这个值，它不会把它转换成 NaN。
 对于 {"tz": None} 和 {}：这两种情况代表了 “此处没有值”。
 Pandas 会将其识别为缺失值，并在 DataFrame 中用 NaN (Not a Number) 来表示。
 
-2. 作几个分类的柱状图是，字符作为坐标，底层数据的数字从0，1，2，3开始。`enumerate()` 是 Python 里一个非常实用的内置函数，它的核心作用是：
+## 作几个分类的柱状图是，字符作为坐标，底层数据的数字从0，1，2，3开始。`enumerate()` 是 Python 里一个非常实用的内置函数，它的核心作用是：
 在遍历列表、元组或其他可迭代对象时，同时获取 “索引” 和 “值”。
 对于
 ```commandline
@@ -131,21 +131,21 @@ for i, value in enumerate(subset.values):
 i分别是0，1，2，3，4，5。这样就正好获得各个标签的坐标
 
 另外，seaborn也可用同一套注释方法
-3. frame[['a']][0:30]和frame['a'][0:30]不一样。[[]]返回dataframe数据，[]只返回series数据
-4. 当你在 GroupBy 对象上调用一个聚合函数时，Pandas 才会真正执行分组和计算
-5. dataframe 的.value_counts()和.size()的区别
+## frame[['a']][0:30]和frame['a'][0:30]不一样。[[]]返回dataframe数据，[]只返回series数据
+## 当你在 GroupBy 对象上调用一个聚合函数时，Pandas 才会真正执行分组和计算
+## dataframe 的.value_counts()和.size()的区别
 - .value_counts()：是一个Series 方法，用来计算一个列表（或一列数据）中每个唯一值出现了多少次。
 - .size() 方法一个分组（groupby）之后才能用的方法。它计算每个分组的大小（即每个组有多少行）。使用对象是GroupBy 对象。所以只要groupby分好组，原始数据的其他列就不用管。
-6. dataframe的apply
+## dataframe的apply
 - 当你直接在一个 DataFrame 上调用 apply 时，默认情况 (axis=0)：按列处理。函数会接收到每一列（一个 Series）作为参数。 axis=1：按行处理。函数会接收到每一行（一个 Series）作为参数。
 - 在 GroupBy 对象上使用 apply
 当你对 groupby 的结果使用 apply 时，行为就变成了逐组处理。 apply 会遍历每个分组，然后： 把每个分组的数据（一个完整的 DataFrame）作为参数，传递给你指定的函数。 最后，apply 会把所有分组函数的返回值智能地组合起来，形成一个最终的结果。
-7. 使用transform
+## 使用transform
 -注意要明确传入的是哪一列
 ```python
 top_5_zone_melt['normed']=top_5_zone_melt['value']/top_5_zone_melt.groupby('tz')['value'].transform('sum')
 ```
-8. 链式索引问题
+## 链式索引问题
 - 副本（Copy）：你把原始表格完整复印了一份，拿到了一张独立的纸。之后你在这张复印件上写字、修改，哪怕涂得乱七八糟，原始表格完全不会变—— 因为两者是独立的。
 - 视图（View）：你没有复印，而是在原始表格上放了一个 “窗户”（比如一张挖了洞的纸）。透过窗户你只能看到表格的一部分（比如前 5 行、某几列），但你看到的内容本质还是原始表格的内容。这时候如果你在 “窗户里” 改内容（比如把某个数字涂掉重写），就会出现一个问题：你到底是想改 “窗户里的影像”，还是想改 “原始表格上的对应位置”？
 

@@ -6,7 +6,7 @@ import seaborn as sns
 
 # 显示所有列
 pd.set_option('display.max_columns', None)
-path = r"Bitly\bitly_usagov\example.txt"
+path = r"bitly_usagov\example.txt"
 
 with open(path,encoding='utf-8') as f:
     records = [json.loads(line) for line in f]
@@ -62,7 +62,7 @@ print('cframe[\'os\'].head():\n',cframe['os'].head(),sep="")
 by_tz_os = cframe.groupby(["tz", "os"])
 print('by_tz_os.head()(groupby未聚合前):\n',by_tz_os.head(),sep="")
 #当你在 GroupBy 对象上调用一个聚合函数时，Pandas 才会真正执行分组和计算。在这个阶段，为了清晰地展示结果，Pandas 会将你用于分组的列（tz 和 os）自动设置为结果的多级索引（MultiIndex）。
-#用.size才能计算出每一组的数量，给缺失值填充0方便之后计算
+#用.size才能计算出每一组的数量，给缺失值填充0方便之后计算,替代了values_count
 agg_counts = by_tz_os.size().unstack().fillna(0)
 print('agg_counts:\n',agg_counts,sep="")
 #找出设备数最多的10个地方
@@ -125,7 +125,7 @@ print('cframe2[\'os\'].value_counts():\n',cframe2['os'].value_counts(),sep="")
 print('cframe2:\n',cframe2,sep="")
 #注意不要[cframe2['tz']==""]，这样整行都会改
 cframe2.loc[cframe2['tz']=="",'tz']="UNKNOWN_ZONE"
-#选出tz和os两列
+#选出tz和os两列，否则value_counts()报错。如果不选用.size()
 cf2_subset=cframe2.loc[:,['tz','os']]
 #分组并计数
 print('cf2_subset:\n',cf2_subset,sep="")
