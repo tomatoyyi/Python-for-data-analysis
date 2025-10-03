@@ -7,16 +7,17 @@ import seaborn as sns
 # 显示所有列
 pd.set_option('display.max_columns', None)
 path = r"bitly_usagov\example.txt"
-
+#这个数据集的一行是一个字典
 with open(path,encoding='utf-8') as f:
     records = [json.loads(line) for line in f]
 
 
 #时区对比
 #print(records[0])#字典太难看
-#print(json.dumps(records[0], ensure_ascii=False, indent=4))#用json格式查看便于观察
+print(json.dumps(records[0], ensure_ascii=False, indent=4))#用json格式查看便于观察
+#records是列表，一个数据对应dataframe行方向的增加
 frame=pd.DataFrame(records)
-#print(frame.head())
+print(frame.head())
 time_zone=frame['tz'].fillna("MISSING")
 time_zone[time_zone==""]="UNKNOWN"
 time_zone=time_zone.value_counts()#注意.value_counts()是对单列数据
