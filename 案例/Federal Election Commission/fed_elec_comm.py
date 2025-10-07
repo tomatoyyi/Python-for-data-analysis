@@ -6,7 +6,7 @@ import seaborn as sns
 # pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_colwidth', None)
 # pd.set_option("display.width", 1000)
-
+ 
 fec = pd.read_csv("D:/PythonProject/data/fec/P00000001-ALL.csv", low_memory=False)
 fec.info()
 #获取所有唯一政治候选人的列表
